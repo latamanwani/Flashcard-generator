@@ -1,9 +1,9 @@
-
-import './App.css';
+// import "./App.css";
 import HomePage from './viewpages/HomePage';
 import CreateFlashCard from './viewpages/CreateFlashCard';
 import MyFlashCard from './viewpages/MyFlashCard';
 import FlashCardDetails from "./viewpages/FlashCardDetails";
+
 
 import { Routes, Route } from "react-router-dom";
 function App() {

@@ -3,11 +3,11 @@ import { Button, Modal } from "react-daisyui";
 import { IoMdClose } from "react-icons/io";
 import { TbCopy } from "react-icons/tb";
 import { BsShare } from "react-icons/bs";
-// import Facebook from "../assets/facebook-icon.svg";
-// import Linkedin from "../assets/linkedin-icon.svg";
-// import Whatsapp from "../assets/whatsapp-icon.svg";
-// import Twitter from "../assets/twitter-icon.svg";
-// import Mail from "../assets/mail-icon.svg";
+ import facebook from "../assets/facebook-icon.svg";
+ import linkedin from "../assets/linkedin-icon.svg";
+ import Whatsapp from "../assets/whatsapp-icon.svg";
+ import twitter from "../assets/twitter-icon.svg";
+ import mail from "../assets/mail-icon.svg";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import {
   FacebookShareButton,
@@ -67,46 +67,46 @@ const ShareModal = ({ isOpen, closeModal }) => {
           <h2 className="p-2 h-5 ml-3 text-sm text-red-500 font-semibold">
             {isCopied && "Link copied to clipboard"}
           </h2>
-          {/* <div className="mt-6 flex items-center space-x-10 justify-center">
+          <div className="mt-6 flex items-center space-x-10 justify-center">
             <FacebookShareButton url="https://www.facebook.com/">
               <img
-                src={Facebook}
-                alt="Facebook"
+                 src={facebook}
+                 alt="facebook"
                 className="w-10 p-2 bg-slate-100 rounded-lg cursor-pointer"
               />
             </FacebookShareButton>
             <LinkedinShareButton url="https://www.linkedin.com/">
               <img
-                src={Linkedin}
-                alt="Linkedin"
+                 src={linkedin}
+                 alt="Linkedin"
                 className="w-10 p-2 bg-slate-100 rounded-lg cursor-pointer"
               />
             </LinkedinShareButton>
             <WhatsappShareButton url="https://web.whatsapp.com/">
               <img
                 src={Whatsapp}
-                alt="Whatsapp"
+                 alt="Whatsapp"
                 className="w-10 p-2 bg-slate-100 rounded-lg cursor-pointer"
               />
             </WhatsappShareButton>
             <TwitterShareButton url="https://twitter.com/">
               <img
-                src={Twitter}
-                alt="Twitter"
+                 src={twitter}
+                 alt="Twitter"
                 className="w-10 p-2 bg-slate-100 rounded-lg cursor-pointer"
               />
             </TwitterShareButton>
             <EmailShareButton url="https://gmail.com/">
               <img
-                src={Mail}
-                alt="Mail"
+                 src={mail}
+                 alt="Mail"
                 className="w-10 p-2 bg-slate-100 rounded-lg cursor-pointer"
               />
-            </EmailShareButton> */}
-          {/* </div> */}
+            </EmailShareButton>
+          </div>
         </div>
       </Modal.Body>
     </Modal>
   );
 };
-// export default ShareModal;
+export default ShareModal;

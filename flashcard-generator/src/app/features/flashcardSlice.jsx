@@ -1,43 +1,55 @@
-/* In this file first we are taking the flashcard from the local storage if exists, else we are writing empty
-array and after this we are creating slice called flashcardSlice it  accepts an initial state, an object of reducer functions,
-and a "slice name", and automatically generates action creators and action types that correspond to the reducers and state.
-and we are exporting actions and reducer to use them in other files of the app and can be able to change the state with the help of redux. */
 
 import { createSlice } from "@reduxjs/toolkit";
-//in initialstate we are taking the initial state of localstorage
+
+// Application has One Global state which can be supplied to the whole application
 const initialState = {
-  /*here we  are using ternary to check flashcard in the local storage if the flashcard is present then we will parse them and take them with the help of getItem() meathod else we will write empty array */ 
+  // First it looks into the Localstarage for any Flashcards & sets to the initial state, If not Found then it will set it to Empty array
   flashcards: localStorage.getItem("flashcards")
     ? JSON.parse(localStorage.getItem("flashcards"))
     : [],
 };
-/*here we are creating slice as flashcardslice it will accepts an initial state, an object of   reducer functions,
- and a "slice name", and automatically generates action creators and action types that correspond to the reducers and state. */
+
+const updateLocalStorage = (arr) => {
+  localStorage.setItem("flashcards", JSON.stringify(arr));
+}
+
 export const flashcardSlice = createSlice({
   name: "flashcard",
   initialState,
   reducers: {
-  
+    // This Reducer added the New Flashcards to the store
     setFlashCard(state, action) {
       state.flashcards.push({
         card: action.payload,
       });
-   
+      // after accepting the new flashcard from the user it sets to the Local Starage
       localStorage.setItem("flashcards", JSON.stringify(state.flashcards));
+    },
+    
+    
+    deleteFlashCard: (state, action) => {
+      //console.log(action)
+
+      //delete flashcard from store and localstorage
+      const fcard = state.flashcards.filter(ele => {
+        if (ele.card.groupid === action.payload.groupid && ele.card.groupname === action.payload.groupname) {
+          return ele.card.groupname !== action.payload.groupname;
+        }
+        return ele;
+      });
+      return { ...state, flashcards: fcard };
+
     },
 
-    
-    RemoveCard(state, action) {
-      state.flashcards = state.flashcards.filter(
-        (flashcard) => flashcard.card.groupid !== action.payload
-      );
-      localStorage.setItem("flashcards", JSON.stringify(state.flashcards));
-    },
+    //update the state of localstorage
+    updateState: (state, action) => {
+      updateLocalStorage(state.flashcards);
+    }
+
   },
 });
 
-export const { setFlashCard, RemoveCard } = flashcardSlice.actions;
-
+export const { setFlashCard , deleteFlashCard, updateState  } = flashcardSlice.actions;
 
 
 export default flashcardSlice.reducer;

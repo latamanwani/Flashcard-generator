@@ -1,10 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import flashcardReducer from "../app/features/flashcardSlice";
+ import flashcardReducer from "./features/flashcardSlice";
 
 // The global store creared for the application, which has Reducers
- export const store = configureStore({
+export const store = configureStore({
   reducer: {
     flashcard: flashcardReducer,
   },
 });
-

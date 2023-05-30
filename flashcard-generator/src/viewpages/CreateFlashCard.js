@@ -1,94 +1,94 @@
-
-import React, { useRef, useState } from "react";
+import React, { useState, useRef } from "react";
 import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
 import FlashCardSchema from "../validations/schema/CardSchema";
+import { ToastContainer, toast } from 'react-toastify';
+
 import { nanoid } from "nanoid";
-import {
-  AiOutlinePlus,
-  AiOutlineUpload,
-  AiOutlineEdit,
-  AiOutlineDelete,
-} from "react-icons/ai";
+import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
+import { PencilAltIcon, TrashIcon } from "@heroicons/react/outline";
+
 import { useDispatch } from "react-redux";
 import { setFlashCard } from "../app/features/flashcardSlice";
-import TextError from "../validations/customErrorForm/TextError";
+
+import 'react-toastify/dist/ReactToastify.css';
 
 const CreateFlashCard = (props) => {
-  const dispatch = useDispatch(); //for dispaching our action
+  const dispatch = useDispatch();
   const filePickerRef = useRef(null);
   const editRef = useRef(null);
-  const [groupImg, setGroupImg] = useState(""); //State for group image. Set initial value as empty.
-  /*we are creating a functin which will take values and actions as parameter and will dispatch the action to create flashcard on calling and will reset the form and change the group image to empty string. */
+  const [groupimg, setGroupimg] = useState(" ");
 
-  const filePicker = useRef(null);
-  const [singleImg, setSelectImg] = useState("");
+  const notify = () => {
+    toast("Flashcard Created Successfully.....");
+  }
 
   const addFlashCard = (values, actions) => {
     dispatch(setFlashCard(values));
     actions.resetForm();
-    setGroupImg("");
-    setSelectImg("");
-    actions.setSelectImg(false);
+    setGroupimg("");
+    notify();
   };
 
   return (
     <Formik
+      // This sets the Initial Values of form input for the Formik, which wil afer being change according to the user Input
       initialValues={{
-        groupid: nanoid(), //to create unique group id
+        groupid: nanoid(),
         groupname: "",
         groupdescription: "",
-        groupimg: null,
-        selectimg: null,
-        img: null,
-
+        groupimg: "",
         cards: [
           {
-            cardid: nanoid(), //to create unique Card id
+            cardid: nanoid(),
             cardname: "",
             carddescription: "",
           },
         ],
         createOn: new Date(Date.now()).toLocaleString(),
       }}
-      validationSchema={FlashCardSchema} //giving validation schema to the form to show error if values are entered wrong
+      validationSchema={FlashCardSchema}
       onSubmit={addFlashCard}
     >
       {({ values, isSubmitting, setFieldValue }) => (
-        <Form className="w-full space-y-5 text-black-600 text-bold font-medium">
-          <div className="md:flex flex-col px-10 py-4 bg-white drop-shadow-lg space-y-4 rounded-lg" style={{ backgroundColor: props.mode === "white" ? "white" : "rgb(30 41 59)" }}>
-            <div className="flex flex-col sm:flex-row items-center space-x-10 pt-3" >
+        <Form className="w-full space-y-5 text-slate-500 font-medium">
+          <div className="flex flex-col px-10 py-4 bg-white drop-shadow-lg space-y-4 rounded-md">
+            {/* upper */}
+            <div className="flex flex-col sm:flex-row items-center space-x-10 pt-3">
+              {/* left */}
               <div className="flex flex-col relative">
-                <label style={{ color: props.mode === "white" ? "black" : "white" }} htmlFor="createGroup">Create Group *</label>
+                <h2>Create Group</h2>
                 <Field
                   type="text"
-                  name="groupname" 
                   id="createGroup"
-                  placeholder=" Enter Group Name "
-                  className="border-gray-300 md:w-96 border-2 rounded-lg focus:ring-gray-500 focus:border focus:border-gray-700" style={{ backgroundColor: props.mode === "white" ? "white" : "rgb(15 23 42)", color: props.mode === "white" ? "black" : "white" }}
+                  name="groupname"
+                  className="border-slate-300 md:w-96 border-2 rounded-sm focus:ring-slate-400 focus:border focus:border-slate-400"
                 />
-                <ErrorMessage component={TextError} name="groupname" />
+                <span className="absolute left-[7rem] text-lg font-medium">
+                  *
+                </span>
+                <ErrorMessage
+                  component={"div"}
+                  className="text-sm text-red-500"
+                  name="groupname"
+                />
+                {/* <span onClick={() => {setGroupimg(''); }} ></span> */}
               </div>
-              {/*if the group image is present it will display the group image 
-              else it will give the button to add group image from your device and then display it.*/}
-              {groupImg ? (
-                <img
-                  src={groupImg}
-                  alt="groupImg"
-                  className="w-28 h-28 object-contain"
-                />
+              {/* right */}
+              {groupimg ? (
+                <img className="w-28 h-28 object-contain" src={groupimg} alt="groupimg"></img>
+                
               ) : (
-                <button style={{ backgroundColor: props.mode === "white" ? "white" : "rgb(12 74 110)" , color: props.mode === "white" ? "black" : "white"}}
+                <button
                   type="button"
-                  onClick={() => filePicker.current.click()}
-                  className={`md:flex items-center px-10 py-2 mt-6 bg-white border-2 border-slate-300 active:border-blue-600 
-                  text-blue-700 font-semibold rounded-md space-x-2 `}
+                  onClick={() => filePickerRef.current.click()}
+                  className={`flex items-center px-5 py-2 mt-6 bg-white border-2 border-slate-300 active:border-blue-600 text-blue-700 font-semibold rounded-md space-x-2`}
                 >
-                  <AiOutlineUpload className="w-6 h-6"  />
-                  <span >Upload Image</span>
+                  <UploadOutlined />
+                  <span>Upload Image</span>
                   <input
                     type="file"
-                    ref={filePicker}
-                    value={groupImg}
+                    ref={filePickerRef}
+                    value={groupimg}
                     onChange={(e) => {
                       const file = e.target.files[0];
                       const reader = new FileReader();
@@ -96,7 +96,7 @@ const CreateFlashCard = (props) => {
 
                       reader.onload = () => {
                         setFieldValue("groupimg", reader.result);
-                        setGroupImg(reader.result);
+                        setGroupimg(reader.result);
                       };
                     }}
                     hidden
@@ -104,120 +104,102 @@ const CreateFlashCard = (props) => {
                 </button>
               )}
             </div>
-
-            <div className="flex flex-col w-full sm:w-[70%]" >
-              <label style={{ color: props.mode === "white" ? "black" : "white" }} htmlFor="addDescription" className="mb-2">
-                Add Description
-              </label>
+            {/* down */}
+            <div className="flex flex-col w-full sm:w-[70%]">
+              <h2 className="mb-2">Add Description</h2>
               <Field
                 as="textarea"
-                name="groupdescription"
                 id="addDescription"
+                name="groupdescription"
                 rows={3}
-                placeholder="Enter  Group  Description "
-                className="resize-none border-gray-300 border-2 rounded-lg  focus:ring-gray-400 focus:border focus:border-gray-400" style={{ backgroundColor: props.mode === "white" ? "white" : "rgb(15 23 42)", color: props.mode === "white" ? "black" : "white" }}
+                placeholder="Describe the roles, responsibilities, skills required for the job and help candidate understand the role better"
+                className="resize-none border-slate-300 border-2 rounded-sm placeholder:opacity-40 focus:ring-slate-400 focus:border focus:border-slate-400"
               />
-              <ErrorMessage component={TextError} name="groupdescription" />
+              <ErrorMessage
+                component={"div"}
+                className="text-sm text-red-500"
+                name="groupdescription"
+              />
             </div>
           </div>
 
-          <div className="text-black drop-shadow-lg " >
-            {/*here we are creating the form for adding card and taking values of card field */}
+          {/* ------------------------- */}
+
+          {/* Add Cards Section  */}
+          <div className="text-black drop-shadow-lg rounded-lg">
+            {/* FieldArray component from Formik which will create Dynamic Form for the custom input */}
+
             <FieldArray name="cards">
               {(arrayHelper) => {
-                const cards = values.cards; //taking values of card
+                const cards = values.cards;
                 return (
-                  <div className="" >
+                  <>
                     {cards && cards.length > 0
-                      ? cards.map((cards, index) => (
+                      ? cards.map((Cards, index) => (
                           <div
-                            className="flex rounded-t-lg items-center space-x-10 bg-white px-5 lg:px-10 py-4" style={{ backgroundColor: props.mode === "white" ? "white" : "rgb(30 41 59)" }}
+                            className="flex items-center space-x-10 bg-white px-5 lg:px-10 py-4"
                             key={index}
                           >
-                            {/*give numbering to card field */}
-                            <div className="w-8 h-8 px-5 py-5 flex items-center justify-center bg-red-600 text-white text-md font-semibold rounded-full opacity-95 ">
+                            <div className="p-2 w-10 h-10 flex items-center justify-center bg-red-600 text-white text-md font-semibold rounded-full">
                               {index + 1}
                             </div>
                             <div className="flex flex-col space-y-3 md:space-x-10 md:flex-row">
                               <div className="relative flex flex-col justify-center space-y-3">
-                                <label htmlFor="enterTerm" className="" style={{ color: props.mode === "white" ? "black" : "white" }}>
-                                  Enter Term
-                                </label>
+                                <h2 className="">Enter Term</h2>
                                 <Field
                                   type="text"
                                   id="enterTerm"
                                   name={`cards.${index}.cardname`}
                                   innerRef={editRef}
-                                  placeholder="Enter Terms "
-                                  className="border-gray-300 md:w-56 border-2 rounded-lg focus:ring-gray-500 focus:border focus:border-gray-700" style={{ backgroundColor: props.mode === "white" ? "white" : "rgb(15 23 42)", color: props.mode === "white" ? "black" : "white" }}
                                 />
+                                <span className="absolute left-[5.8rem] -top-[15px] md:top-0 text-lg font-medium">
+                                  *
+                                </span>
                                 <ErrorMessage
-                                  component={TextError}
+                                  component={"div"}
+                                  className="text-sm text-red-500"
                                   name={`cards.${index}.cardname`}
                                 />
                               </div>
-                              <div className="relative flex flex-col justify-center space-y-3" > 
-                                <label htmlFor="enterDefinaton" style={{ color: props.mode === "white" ? "black" : "white" }} >
-                                  Enter Defination
-                                </label>
+                              <div className="relative flex flex-col justify-center space-y-3">
+                                <h2 className="">Enter Defination</h2>
                                 <Field
                                   as="textarea"
                                   id="enterDefination"
                                   name={`cards.${index}.carddescription`}
-                                  placeholder="Enter Defination "
-                                  className=" lg:w-72  resize-none border-gray-300 border-2 rounded-lg  focus:ring-gray-400 focus:border focus:border-gray-400" style={{ backgroundColor: props.mode === "white" ? "white" : "rgb(15 23 42)", color: props.mode === "white" ? "black" : "white" }}
+                                  className="resize-none lg:w-72"
                                 />
+                                <span className="absolute left-[8.5rem] -top-[1rem] text-lg font-medium">
+                                  *
+                                </span>
                                 <ErrorMessage
-                                  component={TextError}
+                                  component={"div"}
+                                  className="text-sm text-red-500"
                                   name={`cards.${index}.carddescription`}
                                 />
                               </div>
 
                               <div className="flex items-center space-x-2">
-                                {singleImg ? (
-                                  <img
-                                    src={singleImg}
-                                    alt="singleImg"
-                                    className="w-28 h-28 object-contain"
-                                  />
-                                ) : (
-                                  <button style={{ backgroundColor: props.mode === "white" ? "white" : "rgb(12 74 110)" , color: props.mode === "white" ? "black" : "white"}}
-                                    type="button"
-                                    onClick={() =>
-                                      filePickerRef.current.click()
-                                    }
-                                    className={`md:flex items-center px-10 py-2 mt-6 bg-white border-2 border-slate-300 active:border-blue-600 text-blue-700 font-semibold rounded-md space-x-2 `}>
-                                  
-                                    <input
-                                      type="file"
-                                      ref={filePickerRef}
-                                      value={singleImg}
-                                      onChange={(e) => {
-                                        const file = e.target.files[0];
-                                        const reader = new FileReader();
-                                        reader.readAsDataURL(file);
-                                        reader.onload = () => {
-                                          setFieldValue("img", reader.result);
-                                          setSelectImg(reader.result);
-                                        };
-                                      }}
-                                      hidden
-                                    />
-                                    <span>+Image</span>
-                                  </button>
-                                )}
+                                <button
+                                  className={`hidden lg:flex lg:items-center lg:w-[19rem] px-2 py-2 bg-white border-2 border-blue-600 active:border-slate-300 text-blue-700 font-semibold rounded-md space-x-2
+                          } `}
+                                  disabled={true}
+                                >
+                                  <PlusOutlined />
+                                  <span>Select Image</span>
+                                </button>
                                 <div className="flex items-center justify-around w-full md:flex-col md:space-y-5 md:mt-5">
                                   <button
                                     type="button"
-                                    onClick={() => arrayHelper.remove(index)} // will remove flashcard entry
+                                    onClick={() => arrayHelper.remove(index)}
                                   >
-                                    <AiOutlineDelete className="w-7 h-7  text-black-500" style={{ color: props.mode === "white" ? "black" : "white" }}/>
+                                    <TrashIcon className="h-6 text-slate-500" />
                                   </button>
                                   <button
                                     type="button"
-                                    onClick={() => editRef.current.focus()} 
+                                    onClick={() => editRef.current.focus()}
                                   >
-                                    <AiOutlineEdit className="h-7 w-7 text-blue-700" style={{ color: props.mode === "white" ? "rgb(59 130 246)" : "white" }}/>
+                                    <PencilAltIcon className="h-6 text-blue-600" />
                                   </button>
                                 </div>
                               </div>
@@ -225,40 +207,39 @@ const CreateFlashCard = (props) => {
                           </div>
                         ))
                       : null}
-                    <div className="bg-white rounded-b-lg flex w-full  mb-10 px-5 py-2" style={{ backgroundColor: props.mode === "white" ? "white" : "rgb(30 41 59)" }}>
-                      <button
-                        type="button"
-                        //add flashcard entry 
-                        onClick={() =>
-                          arrayHelper.push({
-                            cardid: nanoid(),
-                            cardname: "",
-                            carddescription: "",
-                          })
-                        }
-                        className="flex items-center space-x-2 text-blue-600  text-md   mb-5 mt-0 "
-                      >
-                        <AiOutlinePlus />
-                        <span >Add More</span>
-                      </button>
-                    </div>
-
-                    <div className="flex justify-center w-full pb-5">
+                    <button
+                      type="button"
+                      onClick={() =>
+                        //  This button will add the new group of inputs to the dynamic form
+                        arrayHelper.push({
+                          cardid: nanoid(),
+                          cardname: "",
+                          carddescription: "",
+                        })
+                      }
+                      className="flex items-center space-x-2 text-blue-600 font-medium text-sm bg-white w-full mb-5 px-5 py-2"
+                    >
+                      <PlusOutlined />
+                      <span>Add More</span>
+                    </button>
+                    <div className="flex justify-center w-full">
                       <button
                         disabled={isSubmitting}
                         type="submit"
                         className="py-2 px-6  bg-red-600 text-white rounded-md"
                       >
                         Create
-                      </button> {/* Create button which will submit the form when clicked on by the user  */}
+                      </button>
                     </div>
-                  </div>
+                  </>
                 );
               }}
             </FieldArray>
           </div>
+          <ToastContainer/>  
         </Form>
       )}
+       
     </Formik>
   );
 };
