@@ -8,7 +8,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { Button, Modal } from "react-daisyui";
 import 'react-toastify/dist/ReactToastify.css';
 
- import pentaCoder from "../../assets/pentaCoder.jpg"
+ import gray from "../../assets/gray.jpg";
 
 // Flashcard component which displays the data in each card
  const FlashcardUI = ({ card ,flashcards }) => {
@@ -19,6 +19,7 @@ import 'react-toastify/dist/ReactToastify.css';
   const [showDelete, setshowDelete] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
 
+   // This function will delete selected group of card which user want to delete.
   const deleteCard = (groupid, groupname) => {
     setshowDelete(true);
     setDeleteId({ groupid: groupid, groupname: groupname })
@@ -32,6 +33,7 @@ import 'react-toastify/dist/ReactToastify.css';
     const notify=()=>{
       toast("Deleted Successfully....")
     }
+      //this function will handle the deleteFlashcard funtion from reducer.
       const handleDelete = () => {
         dispatch(deleteFlashCard(deleteId));
         dispatch(updateState());
@@ -42,9 +44,9 @@ import 'react-toastify/dist/ReactToastify.css';
     <div
       
       key={card.groupid}
-      className="p-4 m-6 mx-auto flex flex-col space-y-3 items-center justify-center bg-white rounded-md text-black w-[23rem] h-[13rem] relative border-2 border-slate-200"
+      className="p-4 m-6 mx-auto flex flex-col space-y-3 items-center justify-center bg-white rounded-md text-black w-[20rem] h-[14rem] relative border-2 border-slate-200"
      >
-      <div className="absolute -top-9">
+      <div className="absolute -top-8">
         {card.groupimg ? (
           <img
             className="rounded-full w-16 h-16 object-cover aspect-square"
@@ -55,17 +57,19 @@ import 'react-toastify/dist/ReactToastify.css';
          
             
             <img className="rounded-full w-16 h-16 object-cover aspect-square"
-             src={pentaCoder}
+             src={gray}
               alt={card.groupimg} /> 
          
         )}
       </div>
 
       <div className="text-center">
-      <h2 className="font-bold text-lg">{card.groupname}</h2>
+     <div><h2 className="font-bold text-lg">{card.groupname}</h2></div> 
+     <div className=" mb-3"> 
       <p className="text-center font-medium text-sm text-slate-600 line-clamp-2">
         {card.groupdescription}
       </p>
+      </div>
       <p className="font-medium text-sm text-slate-700">
         {card.cards ? card.cards.length : 0} Cards
       </p>

@@ -24,7 +24,7 @@ const MyFlashCard = () => {
     <section className="flex flex-col mt-16">
       {flashcard.length > 0 ? (
         <div>
-          <div className="flex flex-wrap">
+          <div className="flex flex-wrap justify-evenly">
             {/* This will only display 6 cards according to the problem statement */}
             {flashcard.slice(0, showLimit).map(( {card} , i) => (
               <div>
@@ -32,7 +32,7 @@ const MyFlashCard = () => {
               </div>
             ))}
           </div>
-          <div className="flex justify-end mr-10">
+          <div className="flex justify-between">
             <button
               className="w-16 mt-1 font-semibold text-lg text-red-600 outline-none border-none active:outline-none active:border-none"
               onClick={() => setShowAll(!showAll)}
