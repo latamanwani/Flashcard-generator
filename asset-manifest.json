@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/static/css/main.1e9b2b40.css",
-    "main.js": "/static/js/main.9929b4c1.js",
-    "static/js/787.254fd7c3.chunk.js": "/static/js/787.254fd7c3.chunk.js",
-    "static/media/hands-tab.jpg": "/static/media/hands-tab.a01aa6a91a2a96378f7b.jpg",
-    "static/media/whatsapp-icon.svg": "/static/media/whatsapp-icon.ac4840a55bdbec684859dfe053adcc02.svg",
-    "static/media/mail-icon.svg": "/static/media/mail-icon.ef6ffce2335cec4b6380b16ae57e36d0.svg",
-    "static/media/twitter-icon.svg": "/static/media/twitter-icon.349845e8a7ecdf4cda9ff0c1f10181b9.svg",
-    "static/media/linkedin-icon.svg": "/static/media/linkedin-icon.027c0b2e29ae5d3213c3df117e50f4f8.svg",
-    "static/media/facebook-icon.svg": "/static/media/facebook-icon.3b098944b4925fbfa9f4d88672bc7a8e.svg",
-    "index.html": "/index.html",
-    "main.1e9b2b40.css.map": "/static/css/main.1e9b2b40.css.map",
-    "main.9929b4c1.js.map": "/static/js/main.9929b4c1.js.map",
-    "787.254fd7c3.chunk.js.map": "/static/js/787.254fd7c3.chunk.js.map"
+    "main.css": "/latamanwani/flashcard-generator/static/css/main.1e9b2b40.css",
+    "main.js": "/latamanwani/flashcard-generator/static/js/main.c3d65b53.js",
+    "static/js/787.254fd7c3.chunk.js": "/latamanwani/flashcard-generator/static/js/787.254fd7c3.chunk.js",
+    "static/media/hands-tab.jpg": "/latamanwani/flashcard-generator/static/media/hands-tab.a01aa6a91a2a96378f7b.jpg",
+    "static/media/whatsapp-icon.svg": "/latamanwani/flashcard-generator/static/media/whatsapp-icon.ac4840a55bdbec684859dfe053adcc02.svg",
+    "static/media/mail-icon.svg": "/latamanwani/flashcard-generator/static/media/mail-icon.ef6ffce2335cec4b6380b16ae57e36d0.svg",
+    "static/media/twitter-icon.svg": "/latamanwani/flashcard-generator/static/media/twitter-icon.349845e8a7ecdf4cda9ff0c1f10181b9.svg",
+    "static/media/linkedin-icon.svg": "/latamanwani/flashcard-generator/static/media/linkedin-icon.027c0b2e29ae5d3213c3df117e50f4f8.svg",
+    "static/media/facebook-icon.svg": "/latamanwani/flashcard-generator/static/media/facebook-icon.3b098944b4925fbfa9f4d88672bc7a8e.svg",
+    "index.html": "/latamanwani/flashcard-generator/index.html",
+    "main.1e9b2b40.css.map": "/latamanwani/flashcard-generator/static/css/main.1e9b2b40.css.map",
+    "main.c3d65b53.js.map": "/latamanwani/flashcard-generator/static/js/main.c3d65b53.js.map",
+    "787.254fd7c3.chunk.js.map": "/latamanwani/flashcard-generator/static/js/787.254fd7c3.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.1e9b2b40.css",
-    "static/js/main.9929b4c1.js"
+    "static/js/main.c3d65b53.js"
   ]
 }
