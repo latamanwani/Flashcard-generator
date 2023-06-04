@@ -12,8 +12,7 @@ const MyFlashCard = () => {
   const flashcard = useSelector((state) => state.flashcard.flashcards);
 
   const [showAll, setShowAll] = useState(false);
-  // const [flashcards, setFlashcards] = useState(flashcard); 
-  // const dispatch = useDispatch();
+  
 
   // this sets the showlimit according to the state of the Show All Button
   const showLimit = !showAll ? 6 : flashcard.length;
