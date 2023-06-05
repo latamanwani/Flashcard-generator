@@ -15,7 +15,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const CreateFlashCard = (props) => {
   const dispatch = useDispatch();
   const filePickerRef = useRef(null);
-  const editRef = useRef(null);
+  const editRef = useRef([]);
   const [groupimg, setGroupimg] = useState("");
 
   const notify = () => {
@@ -28,6 +28,9 @@ const CreateFlashCard = (props) => {
     setGroupimg("");
     notify();
   };
+  const handleInputFocus = (index) => {
+    editRef?.current[index].focus()
+  }
 
   return (
     <Formik
@@ -76,7 +79,7 @@ const CreateFlashCard = (props) => {
               {/* right */}
               {groupimg ? (
                 <img className="w-28 h-28 object-contain" src={groupimg} alt="groupimg"></img>
-                
+
               ) : (
                 <button
                   type="button"
@@ -136,69 +139,69 @@ const CreateFlashCard = (props) => {
                   <>
                     {cards && cards.length > 0
                       ? cards.map((Cards, index) => (
-                          <div
-                            className="flex items-center space-x-10 bg-white px-5 lg:px-10 py-4"
-                            key={index}
-                          >
-                            <div className="p-2 w-10 h-10 flex items-center justify-center bg-red-600 text-white text-md font-semibold rounded-full">
-                              {index + 1}
+                        <div
+                          className="flex items-center space-x-10 bg-white px-5 lg:px-10 py-4"
+                          key={index}
+                        >
+                          <div className="p-2 w-10 h-10 flex items-center justify-center bg-red-600 text-white text-md font-semibold rounded-full">
+                            {index + 1}
+                          </div>
+                          <div className="flex flex-col space-y-3 md:space-x-10 md:flex-row">
+                            <div className="relative flex flex-col justify-center space-y-3">
+                              <h2 className="">Enter Term</h2>
+                              <Field
+                                type="text"
+                                id="enterTerm"
+                                name={`cards.${index}.cardname`}
+                                innerRef={(ref) => editRef.current[index] = ref}
+                              />
+                              <span className="absolute left-[5.8rem] -top-[15px] md:top-0 text-lg font-medium">
+                                *
+                              </span>
+                              <ErrorMessage
+                                component={"div"}
+                                className="text-sm text-red-500"
+                                name={`cards.${index}.cardname`}
+                              />
                             </div>
-                            <div className="flex flex-col space-y-3 md:space-x-10 md:flex-row">
-                              <div className="relative flex flex-col justify-center space-y-3">
-                                <h2 className="">Enter Term</h2>
-                                <Field
-                                  type="text"
-                                  id="enterTerm"
-                                  name={`cards.${index}.cardname`}
-                                  innerRef={editRef}
-                                />
-                                <span className="absolute left-[5.8rem] -top-[15px] md:top-0 text-lg font-medium">
-                                  *
-                                </span>
-                                <ErrorMessage
-                                  component={"div"}
-                                  className="text-sm text-red-500"
-                                  name={`cards.${index}.cardname`}
-                                />
-                              </div>
-                              <div className="relative flex flex-col justify-center space-y-3">
-                                <h2 className="">Enter Defination</h2>
-                                <Field
-                                  as="textarea"
-                                  id="enterDefination"
-                                  name={`cards.${index}.carddescription`}
-                                  className="resize-none lg:w-72"
-                                />
-                                <span className="absolute left-[8.5rem] -top-[1rem] text-lg font-medium">
-                                  *
-                                </span>
-                                <ErrorMessage
-                                  component={"div"}
-                                  className="text-sm text-red-500"
-                                  name={`cards.${index}.carddescription`}
-                                />
-                              </div>
+                            <div className="relative flex flex-col justify-center space-y-3">
+                              <h2 className="">Enter Defination</h2>
+                              <Field
+                                as="textarea"
+                                id="enterDefination"
+                                name={`cards.${index}.carddescription`}
+                                className="resize-none lg:w-72"
+                              />
+                              <span className="absolute left-[8.5rem] -top-[1rem] text-lg font-medium">
+                                *
+                              </span>
+                              <ErrorMessage
+                                component={"div"}
+                                className="text-sm text-red-500"
+                                name={`cards.${index}.carddescription`}
+                              />
+                            </div>
 
-                              <div className="flex items-center space-x-2">
-                               
-                                <div className="flex items-center justify-around w-full md:flex-col md:space-y-5 md:mt-5">
-                                  <button
-                                    type="button"
-                                    onClick={() => arrayHelper.remove(index)}
-                                  >
-                                    <TrashIcon className="h-6 text-slate-500" />
-                                  </button>
-                                  <button
-                                    type="button"
-                                    onClick={() => editRef.current.focus()}
-                                  >
-                                    <PencilAltIcon className="h-6 text-blue-600" />
-                                  </button>
-                                </div>
+                            <div className="flex items-center space-x-2">
+
+                              <div className="flex items-center justify-around w-full md:flex-col md:space-y-5 md:mt-5">
+                                <button
+                                  type="button"
+                                  onClick={() => arrayHelper.remove(index)}
+                                >
+                                  <TrashIcon className="h-6 text-slate-500" />
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() => handleInputFocus(index)}
+                                >
+                                  <PencilAltIcon className="h-6 text-blue-600" />
+                                </button>
                               </div>
                             </div>
                           </div>
-                        ))
+                        </div>
+                      ))
                       : null}
                     <button
                       type="button"
@@ -229,10 +232,10 @@ const CreateFlashCard = (props) => {
               }}
             </FieldArray>
           </div>
-          <ToastContainer/>  
+          <ToastContainer />
         </Form>
       )}
-       
+
     </Formik>
   );
 };
