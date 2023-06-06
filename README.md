@@ -1,3 +1,8 @@
+# Summary
+
+ https://docs.google.com/document/d/1-7T3Mb-HzyZaEXV5muslHYTFEq8-nd_GSl-H6l9R4KM/edit?usp=sharing
+ 
+ 
 # Flashcard Generator with React
 
 Flashcard Generator is a powerful study tool developed with React that allows users to create, manage, and study flashcards effortlessly. This application provides a comprehensive solution for organizing and reviewing information in an intuitive and user-friendly manner.
