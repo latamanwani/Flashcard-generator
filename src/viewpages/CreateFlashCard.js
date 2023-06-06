@@ -64,6 +64,7 @@ const CreateFlashCard = (props) => {
                   type="text"
                   id="createGroup"
                   name="groupname"
+                  placeholder="group name"
                   className="border-slate-300 md:w-96 border-2 rounded-sm focus:ring-slate-400 focus:border focus:border-slate-400"
                 />
                 <span className="absolute left-[7rem] text-lg font-medium">
@@ -152,6 +153,8 @@ const CreateFlashCard = (props) => {
                               <Field
                                 type="text"
                                 id="enterTerm"
+                                placeholder="enterTerm"
+                                data-testid="enterTerm"
                                 name={`cards.${index}.cardname`}
                                 innerRef={(ref) => editRef.current[index] = ref}
                               />
@@ -169,6 +172,7 @@ const CreateFlashCard = (props) => {
                               <Field
                                 as="textarea"
                                 id="enterDefination"
+                                placeholder="enterDefination"
                                 name={`cards.${index}.carddescription`}
                                 className="resize-none lg:w-72"
                               />
@@ -187,6 +191,7 @@ const CreateFlashCard = (props) => {
                               <div className="flex items-center justify-around w-full md:flex-col md:space-y-5 md:mt-5">
                                 <button
                                   type="button"
+                                  data-testid="remove"
                                   onClick={() => arrayHelper.remove(index)}
                                 >
                                   <TrashIcon className="h-6 text-slate-500" />
@@ -222,6 +227,7 @@ const CreateFlashCard = (props) => {
                       <button
                         disabled={isSubmitting}
                         type="submit"
+                        data-testid="create-flash"
                         className="py-2 px-6  bg-red-600 text-white rounded-md"
                       >
                         Create
